@@ -5,15 +5,16 @@ import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
- *
+ * Main window.
+ * 
  * @author Prof. Dr. David Buzatto
  */
 public class MainWindow extends javax.swing.JFrame {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger( MainWindow.class.getName() );
 
     /**
      * Creates new form MainWindow
@@ -157,11 +158,10 @@ public class MainWindow extends javax.swing.JFrame {
                 "PDF Watermark POC",
                 JOptionPane.INFORMATION_MESSAGE
             );
-        } catch ( IOException ex ) {
-            logger.log( java.util.logging.Level.SEVERE, null, ex );
+        } catch ( IOException exc ) {
             JOptionPane.showMessageDialog(
                 this,
-                "Error processing file:\n" + ex.getMessage(),
+                "Error processing file:\n" + exc.getMessage(),
                 "PDF Watermark POC",
                 JOptionPane.ERROR_MESSAGE
             );
@@ -186,14 +186,14 @@ public class MainWindow extends javax.swing.JFrame {
      */
     public static void main( String args[] ) {
         try {
-            for ( javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels() ) {
+            for ( UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels() ) {
                 if ( "Nimbus".equals( info.getName() ) ) {
-                    javax.swing.UIManager.setLookAndFeel( info.getClassName() );
+                    UIManager.setLookAndFeel( info.getClassName() );
                     break;
                 }
             }
-        } catch ( ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex ) {
-            logger.log( java.util.logging.Level.SEVERE, null, ex );
+        } catch ( ReflectiveOperationException | UnsupportedLookAndFeelException exc ) {
+            exc.printStackTrace();
         }
         SwingUtilities.invokeLater( () -> new MainWindow().setVisible( true ) );
     }
